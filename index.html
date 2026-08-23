@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>giffgaff — Your mobile, your way.</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    --lime:#b7ff00;
+    --lime2:#d4ff65;
+    --black:#101010;
+    --black2:#191919;
+    --white:#ffffff;
+    --soft:#f4f5f0;
+    --gray:#777b73;
+    --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#fff;
+    color:#101010;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+.cursor-glow{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        rgba(183,255,0,.12),
+        transparent 65%
+    );
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:0;
+}
+
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:999;
+    opacity:.025;
+
+    background-image:url(
+        "data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"
+    );
+}
+
+/* NAV */
+
+.nav{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    padding:22px 28px;
+    z-index:500;
+}
+
+.nav-inner{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.nav-logo{
+    height:42px;
+    width:auto;
+    object-fit:contain;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.nav-link{
+    color:#555951;
+    font-size:11px;
+    font-weight:700;
+}
+
+.nav-download{
+    padding:13px 19px;
+    border-radius:100px;
+    background:#101010;
+    color:white;
+    font-size:10px;
+    font-weight:800;
+    transition:.3s var(--ease);
+}
+
+.nav-download:hover{
+    background:var(--lime);
+    color:#111;
+    transform:translateY(-2px);
+}
+
+/* HERO */
+
+.hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f7f8f4 100%
+        );
+}
+
+.hero-grid{
+    position:relative;
+    width:min(1500px,92%);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero-background-word{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-52%);
+    font-size:clamp(150px,25vw,420px);
+    line-height:.7;
+    letter-spacing:-.09em;
+    font-weight:900;
+    color:rgba(0,0,0,.035);
+    white-space:nowrap;
+    user-select:none;
+}
+
+.hero-green-orb{
+    position:absolute;
+
+    width:clamp(300px,40vw,620px);
+    height:clamp(300px,40vw,620px);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ddff87,
+            #b7ff00 45%,
+            #81b500 100%
+        );
+
+    opacity:.8;
+
+    box-shadow:
+        0 0 100px
+        rgba(183,255,0,.3);
+
+    transform:
+        translate(270px,-30px);
+}
+
+.hero-content{
+    position:absolute;
+    left:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:420px;
+    z-index:10;
+}
+
+.hero-mini{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    color:#686d64;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.12em;
+}
+
+.hero-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--lime);
+
+    box-shadow:
+        0 0 15px
+        var(--lime);
+}
+
+.hero-title{
+    margin-top:25px;
+
+    font-size:
+        clamp(58px,7vw,105px);
+
+    line-height:.83;
+    letter-spacing:-.085em;
+    font-weight:900;
+}
+
+.hero-title .muted{
+    color:#a5aaa2;
+}
+
+.hero-title .green{
+    color:#91c900;
+}
+
+.hero-description{
+    margin-top:28px;
+    max-width:410px;
+    color:#737870;
+    font-size:13px;
+    line-height:1.8;
+}
+
+.hero-actions{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
+}
+
+.primary{
+    padding:16px 22px;
+    border-radius:14px;
+    background:#111;
+    color:white;
+    font-size:10px;
+    font-weight:900;
+    border:none;
+    cursor:pointer;
+    transition:.35s var(--ease);
+}
+
+.primary:hover{
+    background:var(--lime);
+    color:#111;
+    transform:
+        translateY(-4px)
+        scale(1.02);
+}
+
+.secondary{
+    padding:16px 22px;
+    border-radius:14px;
+    background:white;
+    color:#111;
+    border:1px solid rgba(0,0,0,.1);
+    font-size:10px;
+    font-weight:900;
+    transition:.35s var(--ease);
+}
+
+.secondary:hover{
+    transform:translateY(-4px);
+}
+
+/* HERO PHONE */
+
+.hero-phone-wrap{
+    position:relative;
+    width:340px;
+    height:650px;
+    z-index:20;
+    perspective:1800px;
+}
+
+.hero-phone{
+    position:absolute;
+    inset:0;
+    padding:9px;
+    border-radius:53px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #d5d8d2
+        );
+
+    box-shadow:
+        35px 60px 100px
+        rgba(0,0,0,.18),
+
+        inset 0 0 0 1px
+        rgba(0,0,0,.12);
+
+    transform:
+        rotateY(-13deg)
+        rotateX(5deg)
+        rotateZ(3deg);
+
+    transition:
+        transform .25s var(--ease);
+}
+
+.hero-phone::after{
+    content:"";
+    position:absolute;
+    inset:9px;
+    border-radius:45px;
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            115deg,
+            rgba(255,255,255,.35),
+            transparent 35%
+        );
+
+    z-index:30;
+}
+
+.phone-screen{
+    position:absolute;
+    inset:9px;
+    border-radius:44px;
+    overflow:hidden;
+    background:#111;
+}
+
+.phone-screen img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.dynamic-island{
+    position:absolute;
+    width:105px;
+    height:28px;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    border-radius:30px;
+    background:#050505;
+    z-index:40;
+}
+
+/* FLOATING CARDS */
+
+.float-card{
+    position:absolute;
+    z-index:50;
+    padding:14px 18px;
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.75);
+
+    backdrop-filter:blur(20px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.95);
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.10);
+
+    transition:.5s var(--ease);
+}
+
+.float-card.one{
+    left:-80px;
+    top:120px;
+}
+
+.float-card.two{
+    right:-90px;
+    bottom:120px;
+}
+
+.float-title{
+    font-size:12px;
+    font-weight:900;
+}
+
+.float-sub{
+    margin-top:4px;
+    font-size:8px;
+    color:#858a81;
+}
+
+/* SCROLL */
+
+.scroll-indicator{
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:8px;
+
+    color:#898e86;
+
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.15em;
+}
+
+.scroll-line{
+    width:1px;
+    height:45px;
+
+    background:
+        linear-gradient(
+            #aaa,
+            transparent
+        );
+
+    animation:
+        scrollLine 1.8s infinite;
+}
+
+@keyframes scrollLine{
+    50%{
+        transform:translateY(12px);
+        opacity:.3;
+    }
+}
+
+/* STORY */
+
+.story{
+    position:relative;
+    background:#101010;
+    color:white;
+}
+
+.story-intro{
+    min-height:60vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:100px 20px;
+}
+
+.story-intro h2{
+    max-width:1000px;
+
+    font-size:
+        clamp(55px,9vw,145px);
+
+    line-height:.82;
+    letter-spacing:-.09em;
+}
+
+.story-intro h2 span{
+    color:var(--lime);
+}
+
+.story-container{
+    position:relative;
+    max-width:1400px;
+    margin:auto;
+    min-height:330vh;
+}
+
+.story-sticky{
+    position:sticky;
+    top:0;
+
+    height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.story-glow{
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(183,255,0,.20),
+            transparent 65%
+        );
+
+    filter:blur(20px);
+
+    transition:
+        transform 1s var(--ease),
+        opacity .8s ease;
+}
+
+.story-number{
+    position:absolute;
+    left:5%;
+    top:12%;
+
+    font-size:13px;
+    color:#656960;
+    font-weight:900;
+    letter-spacing:.15em;
+}
+
+.story-phone{
+    position:relative;
+
+    width:310px;
+    height:620px;
+
+    padding:9px;
+
+    border-radius:50px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #cfd3ca
+        );
+
+    box-shadow:
+        30px 50px 100px
+        rgba(0,0,0,.45);
+
+    transform:
+        rotateY(-10deg)
+        rotateZ(2deg);
+
+    transition:
+        transform 1s var(--ease);
+
+    z-index:20;
+}
+
+.story-phone-screen{
+    position:absolute;
+    inset:9px;
+    border-radius:42px;
+    overflow:hidden;
+    background:#111;
+}
+
+.story-phone-screen img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+
+    transition:
+        opacity .5s ease,
+        transform .8s var(--ease);
+}
+
+.story-phone-notch{
+    position:absolute;
+    width:95px;
+    height:25px;
+
+    left:50%;
+    top:18px;
+
+    transform:translateX(-50%);
+
+    background:#050505;
+    border-radius:30px;
+
+    z-index:30;
+}
+
+.story-copy{
+    position:absolute;
+    width:370px;
+    z-index:30;
+
+    transition:
+        opacity .7s ease,
+        transform .8s var(--ease);
+}
+
+.story-copy.left{
+    left:4%;
+}
+
+.story-copy.right{
+    right:4%;
+}
+
+.story-copy h3{
+    font-size:
+        clamp(42px,5vw,75px);
+
+    line-height:.87;
+    letter-spacing:-.07em;
+}
+
+.story-copy h3 span{
+    color:var(--lime);
+}
+
+.story-copy p{
+    margin-top:20px;
+    color:#9da29a;
+    font-size:12px;
+    line-height:1.8;
+}
+
+.story-tag{
+    display:inline-flex;
+
+    margin-bottom:18px;
+
+    padding:8px 11px;
+
+    border-radius:100px;
+
+    background:
+        rgba(183,255,0,.1);
+
+    color:var(--lime);
+
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.12em;
+}
+
+.story-progress{
+    position:absolute;
+    right:5%;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    display:flex;
+    flex-direction:column;
+
+    gap:12px;
+
+    z-index:100;
+}
+
+.progress-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#444;
+    transition:.4s;
+}
+
+.progress-dot.active{
+    background:var(--lime);
+
+    transform:scale(1.7);
+
+    box-shadow:
+        0 0 20px
+        rgba(183,255,0,.6);
+}
+
+/* OFFERS */
+
+.offers{
+    background:#f4f5f0;
+    color:#111;
+    padding:150px 20px;
+}
+
+.max{
+    width:min(1300px,92%);
+    margin:auto;
+}
+
+.section-label{
+    color:#82ad00;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.18em;
+}
+
+.offers-title{
+    margin-top:18px;
+
+    font-size:
+        clamp(55px,8vw,115px);
+
+    line-height:.82;
+    letter-spacing:-.09em;
+}
+
+.offers-title span{
+    color:#9da29a;
+}
+
+.offer-grid{
+    margin-top:70px;
+
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.offer-card{
+    position:relative;
+
+    min-height:480px;
+
+    padding:35px;
+
+    border-radius:34px;
+
+    background:white;
+
+    border:
+        1px solid
+        rgba(0,0,0,.06);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+    transition:
+        .5s var(--ease);
+}
+
+.offer-card:hover{
+    transform:
+        translateY(-12px)
+        rotateX(2deg);
+
+    box-shadow:
+        0 45px 100px
+        rgba(0,0,0,.13);
+}
+
+.offer-card.featured{
+    background:#111;
+    color:white;
+}
+
+.offer-card.featured::before{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-100px;
+    top:-100px;
+
+    border-radius:50%;
+
+    background:var(--lime);
+
+    filter:blur(70px);
+
+    opacity:.5;
+}
+
+.offer-badge{
+    position:relative;
+
+    display:inline-block;
+
+    padding:7px 10px;
+
+    border-radius:100px;
+
+    background:var(--lime);
+
+    color:#111;
+
+    font-size:8px;
+    font-weight:900;
+}
+
+.offer-card h3{
+    position:relative;
+
+    margin-top:40px;
+
+    font-size:30px;
+    letter-spacing:-.06em;
+}
+
+.offer-price{
+    position:relative;
+
+    margin-top:25px;
+
+    font-size:65px;
+    line-height:.8;
+
+    letter-spacing:-.08em;
+
+    font-weight:900;
+}
+
+.offer-description{
+    position:relative;
+
+    margin-top:25px;
+
+    color:#7b8078;
+
+    font-size:11px;
+    line-height:1.7;
+}
+
+.offer-list{
+    position:relative;
+
+    margin-top:25px;
+
+    display:grid;
+    gap:11px;
+}
+
+.offer-list div{
+    font-size:10px;
+}
+
+.offer-list b{
+    color:#8bbd00;
+    margin-right:7px;
+}
+
+.offer-button{
+    position:absolute;
+
+    left:35px;
+    right:35px;
+    bottom:35px;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    text-align:center;
+
+    background:#111;
+    color:white;
+
+    font-size:9px;
+    font-weight:900;
+}
+
+.featured .offer-button{
+    background:var(--lime);
+    color:#111;
+}
+
+/* DOWNLOAD */
+
+.download{
+    position:relative;
+
+    min-height:100vh;
+
+    background:#111;
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    overflow:hidden;
+}
+
+.download-circle{
+    position:absolute;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(183,255,0,.15);
+}
+
+.download-circle::before{
+    content:"";
+
+    position:absolute;
+
+    inset:90px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(183,255,0,.08);
+}
+
+.download-content{
+    position:relative;
+    z-index:5;
+}
+
+.download-logo{
+    width:
+        clamp(
+            180px,
+            25vw,
+            330px
+        );
+
+    margin-bottom:40px;
+
+    filter:
+        brightness(0)
+        invert(1);
+}
+
+.download h2{
+    font-size:
+        clamp(65px,10vw,155px);
+
+    line-height:.78;
+    letter-spacing:-.1em;
+}
+
+.download h2 span{
+    color:var(--lime);
+}
+
+.download p{
+    max-width:500px;
+
+    margin:30px auto;
+
+    color:#999e95;
+
+    font-size:12px;
+    line-height:1.8;
+}
+
+.download-button{
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:12px;
+
+    padding:19px 28px;
+
+    border-radius:16px;
+
+    background:var(--lime);
+
+    color:#111;
+
+    font-size:10px;
+    font-weight:900;
+
+    transition:.4s var(--ease);
+}
+
+.download-button:hover{
+    transform:
+        translateY(-5px)
+        scale(1.04);
+
+    box-shadow:
+        0 20px 60px
+        rgba(183,255,0,.25);
+}
+
+/* FOOTER */
+
+footer{
+    background:#111;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
+
+    padding:30px 5%;
+
+    color:#555a53;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .nav{
+        padding:14px 15px;
+    }
+
+    .nav-link{
+        display:none;
+    }
+
+    .nav-logo{
+        height:30px;
+    }
+
+    .hero{
+        min-height:1050px;
+        align-items:flex-start;
+        padding-top:150px;
+    }
+
+    .hero-grid{
+        display:block;
+    }
+
+    .hero-content{
+        position:relative;
+        left:auto;
+        top:auto;
+        transform:none;
+        width:100%;
+        text-align:center;
+    }
+
+    .hero-description{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-actions{
+        justify-content:center;
+    }
+
+    .hero-phone-wrap{
+        margin:70px auto 0;
+        transform:scale(.82);
+    }
+
+    .hero-green-orb{
+        transform:translate(0,180px);
+    }
+
+    .hero-background-word{
+        top:42%;
+        font-size:110px;
+    }
+
+    .float-card.one{
+        left:-20px;
+    }
+
+    .float-card.two{
+        right:-20px;
+    }
+
+    .story-container{
+        min-height:280vh;
+    }
+
+    .story-phone{
+        width:265px;
+        height:530px;
+    }
+
+    .story-copy{
+        width:calc(100% - 40px);
+
+        left:20px!important;
+        right:auto!important;
+
+        top:12%;
+
+        text-align:center;
+    }
+
+    .story-copy h3{
+        font-size:48px;
+    }
+
+    .story-copy p{
+        max-width:330px;
+        margin:15px auto;
+    }
+
+    .story-phone{
+        margin-top:120px;
+    }
+
+    .story-number{
+        left:20px;
+    }
+
+    .story-progress{
+        right:20px;
+    }
+
+    .offer-grid{
+        grid-template-columns:1fr;
+    }
+
+    .offer-card{
+        min-height:430px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:12px;
+    }
+}
+
+@media(max-width:500px){
+
+    .hero-title{
+        font-size:58px;
+    }
+
+    .hero-phone-wrap{
+        transform:scale(.70);
+        margin-top:40px;
+    }
+
+    .hero{
+        min-height:930px;
+    }
+
+    .story-phone{
+        width:240px;
+        height:480px;
+    }
+
+    .story-copy h3{
+        font-size:42px;
+    }
+
+    .download h2{
+        font-size:70px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div
+class="cursor-glow"
+id="cursorGlow">
+</div>
+
+<div class="noise"></div>
+
+
+<!-- NAV -->
+
+<nav class="nav">
+
+<div class="nav-inner">
+
+<img
+src="img/logo.WEBP"
+class="nav-logo"
+alt="giffgaff">
+
+<div class="nav-right">
+
+<a
+href="#story"
+class="nav-link">
+
+THE EXPERIENCE
+
+</a>
+
+<a
+href="#offers"
+class="nav-link">
+
+OFFERS
+
+</a>
+
+<a
+href="./downloads/GiffGaff.apk"
+class="nav-download"
+download="GiffGaff.apk">
+
+DOWNLOAD APP
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+
+<!-- HERO -->
+
+<section
+class="hero"
+id="home">
+
+<div class="hero-grid">
+
+
+<div class="hero-background-word">
+giffgaff
+</div>
+
+
+<div
+class="hero-green-orb"
+id="heroOrb">
+</div>
+
+
+<div class="hero-content">
+
+<div class="hero-mini">
+
+<span class="hero-dot"></span>
+
+THE NEW MOBILE EXPERIENCE
+
+</div>
+
+
+<h1 class="hero-title">
+
+<span class="muted">
+GIFFGAFF.
+</span>
+
+<br>
+
+YOUR PHONE.
+
+<br>
+
+<span class="green">
+YOUR WAY.
+</span>
+
+</h1>
+
+
+<p class="hero-description">
+
+A digital-first mobile experience designed
+around your phone. Discover the app,
+activate your eSIM and manage your
+connection from one place.
+
+</p>
+
+
+<div class="hero-actions">
+
+<a
+href="./downloads/GiffGaff.apk"
+class="primary"
+download="GiffGaff.apk">
+
+DOWNLOAD APP
+
+</a>
+
+<a
+href="#story"
+class="secondary">
+
+EXPLORE ↓
+
+</a>
+
+</div>
+
+</div>
+
+
+<!-- PHONE -->
+
+<div
+class="hero-phone-wrap"
+id="heroPhoneWrap">
+
+
+<div class="float-card one">
+
+<div class="float-title">
+eSIM READY
+</div>
+
+<div class="float-sub">
+Digital activation
+</div>
+
+</div>
+
+
+<div class="float-card two">
+
+<div class="float-title">
+YOUR CONNECTION
+</div>
+
+<div class="float-sub">
+Managed inside the app
+</div>
+
+</div>
+
+
+<div
+class="hero-phone"
+id="heroPhone">
+
+<div class="phone-screen">
+
+<img
+src="img/photo1.JPG"
+alt="giffgaff application">
+
+</div>
+
+<div class="dynamic-island"></div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="scroll-indicator">
+
+SCROLL
+
+<div class="scroll-line"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- STORY -->
+
+<section
+class="story"
+id="story">
+
+
+<div class="story-intro">
+
+<h2>
+
+ONE APP.
+
+<br>
+
+<span>
+EVERYTHING
+</span>
+
+<br>
+
+CONNECTED.
+
+</h2>
+
+</div>
+
+
+<div
+class="story-container"
+id="storyContainer">
+
+
+<div class="story-sticky">
+
+
+<div
+class="story-glow"
+id="storyGlow">
+</div>
+
+
+<div
+class="story-number"
+id="storyNumber">
+
+01 / 03
+
+</div>
+
+
+<div
+class="story-copy left"
+id="storyCopy">
+
+<div
+class="story-tag"
+id="storyTag">
+
+STEP 01
+
+</div>
+
+
+<h3
+id="storyTitle">
+
+ENTER
+
+<br>
+
+THE
+
+<br>
+
+<span>
+EXPERIENCE.
+</span>
+
+</h3>
+
+
+<p
+id="storyDescription">
+
+Start with the app. Discover a clean,
+digital-first mobile experience built
+around your phone.
+
+</p>
+
+</div>
+
+
+<div
+class="story-phone"
+id="storyPhone">
+
+<div class="story-phone-screen">
+
+<img
+src="img/photo1.JPG"
+id="storyImage"
+alt="giffgaff app">
+
+</div>
+
+<div class="story-phone-notch"></div>
+
+</div>
+
+
+<div class="story-progress">
+
+<div
+class="progress-dot active"
+data-step="1">
+</div>
+
+<div
+class="progress-dot"
+data-step="2">
+</div>
+
+<div
+class="progress-dot"
+data-step="3">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- OFFERS -->
+
+<section
+class="offers"
+id="offers">
+
+
+<div class="max">
+
+
+<div class="section-label">
+SPECIAL OFFERS
+</div>
+
+
+<h2 class="offers-title">
+
+MORE DATA.
+
+<br>
+
+<span>
+MORE FREEDOM.
+</span>
+
+</h2>
+
+
+<div class="offer-grid">
+
+
+<div class="offer-card">
+
+<div class="offer-badge">
+LIMITED
+</div>
+
+<h3>
+5 MONTH ACCESS
+</h3>
+
+<div class="offer-price">
+FREE
+</div>
+
+<div class="offer-description">
+A promotional access package
+for eligible users.
+</div>
+
+<div class="offer-list">
+
+<div>
+<b>✓</b>
+Data allowance
+</div>
+
+<div>
+<b>✓</b>
+Calls
+</div>
+
+<div>
+<b>✓</b>
+SMS
+</div>
+
+<div>
+<b>✓</b>
+App access
+</div>
+
+</div>
+
+<a
+href="./downloads/GiffGaff.apk"
+class="offer-button"
+download="GiffGaff.apk">
+
+GET STARTED
+
+</a>
+
+</div>
+
+
+
+<div
+class="offer-card featured">
+
+<div class="offer-badge">
+FEATURED
+</div>
+
+<h3>
+12 MONTH ACCESS
+</h3>
+
+<div class="offer-price">
+FREE
+</div>
+
+<div class="offer-description">
+An extended promotional package
+for selected users.
+</div>
+
+<div class="offer-list">
+
+<div>
+<b>✓</b>
+Data allowance
+</div>
+
+<div>
+<b>✓</b>
+Calls
+</div>
+
+<div>
+<b>✓</b>
+SMS
+</div>
+
+<div>
+<b>✓</b>
+eSIM activation
+</div>
+
+<div>
+<b>✓</b>
+App management
+</div>
+
+</div>
+
+<a
+href="./downloads/GiffGaff.apk"
+class="offer-button"
+download="GiffGaff.apk">
+
+CLAIM OFFER
+
+</a>
+
+</div>
+
+
+
+<div class="offer-card">
+
+<div class="offer-badge">
+PREMIUM
+</div>
+
+<h3>
+BUILD YOUR PLAN
+</h3>
+
+<div class="offer-price">
+∞
+</div>
+
+<div class="offer-description">
+Present your own data, call and
+message packages here.
+</div>
+
+<div class="offer-list">
+
+<div>
+<b>✓</b>
+Flexible data
+</div>
+
+<div>
+<b>✓</b>
+Calls
+</div>
+
+<div>
+<b>✓</b>
+Messages
+</div>
+
+<div>
+<b>✓</b>
+Travel options
+</div>
+
+</div>
+
+<a
+href="./downloads/GiffGaff.apk"
+class="offer-button"
+download="GiffGaff.apk">
+
+EXPLORE
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- FINAL DOWNLOAD -->
+
+<section
+class="download"
+id="download">
+
+
+<div class="download-circle"></div>
+
+
+<div class="download-content">
+
+
+<img
+src="img/logo.WEBP"
+class="download-logo"
+alt="giffgaff">
+
+
+<h2>
+
+READY?
+
+<br>
+
+<span>
+GET GIFFGAFF.
+</span>
+
+</h2>
+
+
+<p>
+
+Download the application and begin
+your digital mobile experience.
+
+</p>
+
+
+<!-- DIRECT APK DOWNLOAD -->
+
+<a
+href="./downloads/GiffGaff.apk"
+class="download-button"
+download="GiffGaff.apk">
+
+↓
+
+DOWNLOAD THE APP
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+<span>
+GIFFGAFF — DIGITAL MOBILE EXPERIENCE
+</span>
+
+<span>
+© 2026
+</span>
+
+</footer>
+
+
+
+<script>
+
+/* CURSOR */
+
+const cursor =
+document.getElementById("cursorGlow");
+
+
+document.addEventListener(
+"mousemove",
+e => {
+
+    cursor.style.left =
+        e.clientX + "px";
+
+    cursor.style.top =
+        e.clientY + "px";
+
+});
+
+
+/* HERO 3D */
+
+const heroPhone =
+document.getElementById("heroPhone");
+
+const heroOrb =
+document.getElementById("heroOrb");
+
+
+document.addEventListener(
+"mousemove",
+e => {
+
+    if(window.innerWidth < 900)
+        return;
+
+    const x =
+        e.clientX /
+        window.innerWidth -
+        .5;
+
+    const y =
+        e.clientY /
+        window.innerHeight -
+        .5;
+
+    heroPhone.style.transform =
+
+    `
+    rotateY(${x * 22 - 13}deg)
+    rotateX(${-y * 15 + 5}deg)
+    rotateZ(${x * 5 + 3}deg)
+    translate(${x * 12}px,${y * 12}px)
+    `;
+
+    heroOrb.style.transform =
+
+    `
+    translate(
+        ${270 + x * 40}px,
+        ${-30 + y * 40}px
+    )
+    `;
+
+});
+
+
+/* STORY */
+
+const storyData = [
+
+{
+    image:"img/photo1.JPG",
+
+    tag:"STEP 01",
+
+    title:
+    "ENTER<br>THE<br><span>EXPERIENCE.</span>",
+
+    description:
+    "Start with the giffgaff app. Discover a clean digital-first experience built around your phone.",
+
+    rotation:
+    "rotateY(-10deg) rotateZ(2deg) translateY(0px)"
+},
+
+{
+    image:"img/photo2.JPG",
+
+    tag:"STEP 02",
+
+    title:
+    "ACTIVATE<br>YOUR<br><span>eSIM.</span>",
+
+    description:
+    "Enter the activation code supplied with your eSIM and move from setup to connection.",
+
+    rotation:
+    "rotateY(10deg) rotateZ(-3deg) translateY(-15px)"
+},
+
+{
+    image:"img/photo3.JPG",
+
+    tag:"STEP 03",
+
+    title:
+    "CHOOSE<br>YOUR<br><span>NUMBER.</span>",
+
+    description:
+    "Explore the number selection experience and find the option that works for you.",
+
+    rotation:
+    "rotateY(-5deg) rotateZ(2deg) translateY(-25px)"
+}
+
+];
+
+
+const storyContainer =
+document.getElementById(
+"storyContainer"
+);
+
+const storyImage =
+document.getElementById(
+"storyImage"
+);
+
+const storyTitle =
+document.getElementById(
+"storyTitle"
+);
+
+const storyTag =
+document.getElementById(
+"storyTag"
+);
+
+const storyDescription =
+document.getElementById(
+"storyDescription"
+);
+
+const storyPhone =
+document.getElementById(
+"storyPhone"
+);
+
+const storyNumber =
+document.getElementById(
+"storyNumber"
+);
+
+const storyGlow =
+document.getElementById(
+"storyGlow"
+);
+
+const progressDots =
+document.querySelectorAll(
+".progress-dot"
+);
+
+
+let currentStep = -1;
+
+
+function updateStory(step){
+
+    if(step === currentStep)
+        return;
+
+    currentStep = step;
+
+    const data =
+        storyData[step];
+
+    storyImage.style.opacity = "0";
+    storyImage.style.transform =
+        "scale(1.08)";
+
+    storyTitle.style.opacity = "0";
+    storyDescription.style.opacity = "0";
+
+    setTimeout(() => {
+
+        storyImage.src =
+            data.image;
+
+        storyTag.innerHTML =
+            data.tag;
+
+        storyTitle.innerHTML =
+            data.title;
+
+        storyDescription.innerHTML =
+            data.description;
+
+        storyPhone.style.transform =
+            data.rotation;
+
+        storyNumber.innerHTML =
+            `0${step + 1} / 03`;
+
+        storyGlow.style.transform =
+            `
+            translateX(
+                ${(step - 1) * 120}px
+            )
+            scale(
+                ${1 + step * .12}
+            )
+            `;
+
+        progressDots.forEach(dot => {
+
+            dot.classList.remove(
+                "active"
+            );
+
+            if(
+                Number(
+                    dot.dataset.step
+                ) === step + 1
+            ){
+
+                dot.classList.add(
+                    "active"
+                );
+
+            }
+
+        });
+
+        setTimeout(() => {
+
+            storyImage.style.opacity =
+                "1";
+
+            storyImage.style.transform =
+                "scale(1)";
+
+            storyTitle.style.opacity =
+                "1";
+
+            storyDescription.style.opacity =
+                "1";
+
+        },80);
+
+    },350);
+
+}
+
+
+function calculateStory(){
+
+    const rect =
+        storyContainer.getBoundingClientRect();
+
+    const viewport =
+        window.innerHeight;
+
+    const total =
+        rect.height - viewport;
+
+    let progress =
+        -rect.top / total;
+
+    progress =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                progress
+            )
+        );
+
+    let step;
+
+    if(progress < .30){
+
+        step = 0;
+
+    }
+    else if(progress < .65){
+
+        step = 1;
+
+    }
+    else{
+
+        step = 2;
+
+    }
+
+    updateStory(step);
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    calculateStory,
+    {passive:true}
+);
+
+window.addEventListener(
+    "resize",
+    calculateStory
+);
+
+calculateStory();
+
+</script>
+
+</body>
+</html>
